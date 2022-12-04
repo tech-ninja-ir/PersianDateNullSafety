@@ -4,7 +4,7 @@
 ## نصب کتابخانه
 ```
 dependencies:
-  persian_date: ^0.0.2
+  persian_date_null_safety: ^1.0.0
   ```
   ```
   flutter packages get
@@ -84,6 +84,6 @@ AM -
 
 ## گزارش اشکال
 
-در صورت وجود هر گونه مشکل از طریق ایمیل زیر با ما در میان بگذارید[j.zobeidi89@gmail.com][tracker].
+در صورت وجود هر گونه مشکل از طریق ایمیل زیر با ما در میان بگذارید[3hhosaini@gmail.com][tracker].
 
-[tracker]: mailto:j.zobeidi89@gmail.com
+[tracker]: mailto:3hhosaini@gmail.com
