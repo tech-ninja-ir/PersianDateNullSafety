@@ -73,27 +73,26 @@ const String AM = 'AM';
 
 
 class PersianDate {
+  late int _year;
+  late int _month;
+  late int _day;
+  late int _weekday;
+  late int _hour;
+  late int _minute;
+  late int _second;
+  late int _millisecond;
+  late int _microsecond;
 
-  int _year;
-  int _month;
-  int _day;
-  int _weekday;
-  int _hour;
-  int _minute;
-  int _second;
-  int _millisecond;
-  int _microsecond;
+  static const List<String> _DefualtVal = [yyyy, '-', mm, '-', dd, '  ', HH, ':', nn, ':', s, ' ', am];
 
-  static const List<String> _DefualtVal = [yyyy,'-',mm,'-',dd,'  ',HH,':',nn,':',s,' ',am];
-
-  PersianDate.pDate(){
-      var now = new DateTime.now();
-     List list = gregorian_to_jalali(now.year,now.month,now.day);
-     weekday=now.weekday;
-     this.year = list[0];
-     this.month = list[1];
-     this.day = list[2];
-     this.hour=now.hour;
+  PersianDate.pDate() {
+    var now = new DateTime.now();
+    List list = gregorian_to_jalali(now.year, now.month, now.day);
+    weekday = now.weekday;
+    this.year = list[0];
+    this.month = list[1];
+    this.day = list[2];
+    this.hour=now.hour;
      this.minute=now.minute;
      this.second=now.second;
      this.microsecond = now.microsecond;
@@ -218,17 +217,17 @@ class PersianDate {
   ];
 
 
- gregorian_to_jalali(int y,int m,int d,{String separator}){
-    var sumMonthDay = [0,31,59,90,120,151,181,212,243,273,304,334];
-    var jY=0;
-    if(y > 1600){
-      jY=979;
-      y -=1600;
-    }else{
-      jY=0;
-      y -=621;
+  gregorian_to_jalali(int y, int m, int d, {String? separator}) {
+    var sumMonthDay = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    var jY = 0;
+    if (y > 1600) {
+      jY = 979;
+      y -= 1600;
+    } else {
+      jY = 0;
+      y -= 621;
     }
-    var gy = (m > 2)?y+1:y;
+    var gy = (m > 2) ? y + 1 : y;
     var day = (365*y)+((gy+3)/4) - ((gy+99)/100) + ((gy+399)/400)-80+d+sumMonthDay[m-1];
     jY += 33*(day.round()/12053).floor();
     day %=12053;
@@ -253,17 +252,17 @@ class PersianDate {
   }
 
 
-  jalali_to_gregorian(int y,int m,int d,{String separator}){
+  jalali_to_gregorian(int y, int m, int d, {String? separator}) {
     int gY;
-    if(y > 979){
-      gY=1600;
-      y -=979;
-    }else{
+    if (y > 979) {
+      gY = 1600;
+      y -= 979;
+    } else {
       gY = 621;
     }
-    var days = (365*y)+((y/33).floor() * 8)+(((y%33)+3)/4)+78+d+(((m<7)?(m-1)*31:(((m-7)*30)+186)));
-    gY +=400*(days/146097).toInt();
-    days %=146097;
+    var days = (365 * y) + ((y / 33).floor() * 8) + (((y % 33) + 3) / 4) + 78 + d + (((m < 7) ? (m - 1) * 31 : (((m - 7) * 30) + 186)));
+    gY += 400 * (days / 146097).toInt();
+    days %= 146097;
     if(days.floor() > 36524){
       gY +=100*(--days/36524).toInt();
       days %= 36524;
@@ -286,20 +285,18 @@ class PersianDate {
   }
 
 
-
-
-  parse(String formattedString,{String separator}) {
-     var parse = DateTime.parse(formattedString);
-     if(separator==null) {
-       List parseList = gregorian_to_jalali(parse.year, parse.month, parse.day);
-       parseList.add(parse.hour);
-       parseList.add(parse.minute);
-       parseList.add(parse.second);
-       return parseList;
-     }else{
-       return "${gregorian_to_jalali(parse.year, parse.month, parse.day,separator: separator)} ${parse.hour}:${parse.minute}:${parse.second}";
-     }
+  parse(String formattedString, {String? separator}) {
+    var parse = DateTime.parse(formattedString);
+    if (separator == null) {
+      List parseList = gregorian_to_jalali(parse.year, parse.month, parse.day);
+      parseList.add(parse.hour);
+      parseList.add(parse.minute);
+      parseList.add(parse.second);
+      return parseList;
+    } else {
+      return "${gregorian_to_jalali(parse.year, parse.month, parse.day, separator: separator)} ${parse.hour}:${parse.minute}:${parse.second}";
     }
+  }
 
 
   String get weekdayname => dayLong[weekday - 1];
